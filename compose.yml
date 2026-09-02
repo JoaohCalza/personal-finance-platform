@@ -9,6 +9,13 @@ services:
       - .:/var/www/html
     ports:
       - "8000:8000"
+    environment:
+      DB_CONNECTION: "${DB_CONNECTION:-pgsql}"
+      DB_HOST: "${DB_HOST:-postgres}"
+      DB_PORT: "${DB_PORT:-5432}"
+      DB_DATABASE: "${DB_DATABASE:?DB_DATABASE must be set in .env}"
+      DB_USERNAME: "${DB_USERNAME:?DB_USERNAME must be set in .env}"
+      DB_PASSWORD: "${DB_PASSWORD:?DB_PASSWORD must be set in .env}"
     depends_on:
       - postgres
 
@@ -17,9 +24,9 @@ services:
     container_name: personal-finance-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: personal_finance
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: joaoh
+      POSTGRES_DB: "${DB_DATABASE:?DB_DATABASE must be set in .env}"
+      POSTGRES_USER: "${DB_USERNAME:?DB_USERNAME must be set in .env}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD:?DB_PASSWORD must be set in .env}"
     ports:
       - "5432:5432"
     volumes:
