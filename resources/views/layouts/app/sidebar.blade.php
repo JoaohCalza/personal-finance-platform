@@ -15,6 +15,17 @@
                     <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Dashboard') }}
                     </flux:sidebar.item>
+                    <flux:sidebar.item icon="tag" :href="route('categorias.index')" :current="request()->routeIs('categorias.*')" wire:navigate>
+                        {{ __('Categorias') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="wallet" :href="route('carteiras.index')" :current="request()->routeIs('carteiras.*')" wire:navigate>
+                        {{ __('Carteiras') }}
+                    </flux:sidebar.item>
+                    @if (auth()->user()->is_admin)
+                        <flux:sidebar.item icon="users" :href="route('usuarios.index')" :current="request()->routeIs('usuarios.*')" wire:navigate>
+                            {{ __('Usuários') }}
+                        </flux:sidebar.item>
+                    @endif
                 </flux:sidebar.group>
             </flux:sidebar.nav>
 

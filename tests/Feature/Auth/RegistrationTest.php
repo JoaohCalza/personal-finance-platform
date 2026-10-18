@@ -2,22 +2,40 @@
 
 namespace Tests\Feature\Auth;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Fortify\Features;
 use Tests\TestCase;
 
 class RegistrationTest extends TestCase
 {
-    public function test_registration_screen_is_not_available(): void
+    use RefreshDatabase;
+
+    protected function setUp(): void
     {
-        $this->get('/register')->assertNotFound();
+        parent::setUp();
+
+        $this->skipUnlessFortifyHas(Features::registration());
     }
 
-    public function test_users_can_not_register_without_telegram(): void
+    public function test_registration_screen_can_be_rendered(): void
     {
-        $this->post('/register', [
+        $response = $this->get(route('register'));
+
+        $response->assertOk();
+    }
+
+    public function test_new_users_can_register(): void
+    {
+        $response = $this->post(route('register.store'), [
             'name' => 'John Doe',
             'email' => 'test@example.com',
             'password' => 'password',
             'password_confirmation' => 'password',
-        ])->assertNotFound();
+        ]);
+
+        $response->assertSessionHasNoErrors()
+            ->assertRedirect(route('dashboard', absolute: false));
+
+        $this->assertAuthenticated();
     }
 }

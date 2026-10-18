@@ -13,7 +13,6 @@ class FinancialSchemaTest extends TestCase
     public function test_financial_tables_contain_the_columns_from_the_data_model(): void
     {
         $expectedColumns = [
-            'users' => ['telegram_chat_id', 'telegram_usuario'],
             'categorias' => ['user_id', 'nome', 'tipo'],
             'carteiras' => ['user_id', 'nome', 'created_at', 'updated_at'],
             'criptomoedas' => ['nome', 'simbolo', 'api_id'],
@@ -32,7 +31,6 @@ class FinancialSchemaTest extends TestCase
     public function test_optional_financial_columns_are_nullable(): void
     {
         $nullableColumns = [
-            'users' => ['telegram_usuario'],
             'movimentacoes' => ['descricao'],
             'operacoes_cripto' => ['taxas'],
             'investimentos_renda_fixa' => ['taxa', 'data_vencimento'],

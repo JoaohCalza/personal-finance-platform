@@ -26,10 +26,6 @@ class UsersTable
                     ->label('Criado em')
                     ->dateTime('d/m/Y H:i:s')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('telegram_chat_id')
-                    ->label('Telegram Chat ID')
-                    ->sortable()
-                    ->searchable(),
             ])
             ->filters([
                 //
